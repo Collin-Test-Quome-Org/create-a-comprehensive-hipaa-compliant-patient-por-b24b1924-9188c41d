@@ -8,6 +8,8 @@ import { Signup } from '@/pages/Signup';
 import { Dashboard } from '@/pages/Dashboard';
 import { MedicalRecords } from '@/pages/MedicalRecords';
 import { Appointments } from '@/pages/Appointments';
+import { NewAppointment } from '@/pages/NewAppointment';
+import { AppointmentDetails } from '@/pages/AppointmentDetails';
 import { Prescriptions } from '@/pages/Prescriptions';
 import { Messaging } from '@/pages/Messaging';
 import { Notifications } from '@/pages/Notifications';
@@ -26,10 +28,11 @@ export const App = () => (
       <Route path="/medical-records" element={<MedicalRecords />} />
       <Route path="/medical-records/upload" element={<UploadDocuments />} />
       <Route path="/appointments" element={<Appointments />} />
-      {/* Add appointment details/new in future */}
+      <Route path="/appointments/new" element={<NewAppointment />} />
+      <Route path="/appointments/:id" element={<AppointmentDetails />} />
       <Route path="/prescriptions" element={<Prescriptions />} />
       <Route path="/messaging" element={<Messaging />} />
       <Route path="/notifications" element={<Notifications />} />
     </Routes>
   </BrowserRouter>
-);
+)
