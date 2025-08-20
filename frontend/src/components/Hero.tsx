@@ -2,42 +2,38 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-export function Hero() {
+export const Hero = () => {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="relative w-full h-[30rem] flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/branding/assets/hero-0.png')" }}
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
-      <div className="relative z-10 flex flex-col items-center gap-6 text-center max-w-2xl">
+    <div style={{ backgroundImage: "url('/branding/assets/hero-0.png')" }} className="bg-cover bg-center h-96 relative">
+      <div className="bg-black bg-opacity-50 h-full flex flex-col items-center justify-center">
         <motion.h1
-          className="text-white text-5xl font-bold font-montserrat"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.7 }}
+          className="text-white text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg text-center"
+          style={{ fontFamily: 'Montserrat, sans-serif' }}
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 70 }}
         >
-          Secure. Simple. Seamless Healthcare.
+          Welcome to SecureHealth Portal
         </motion.h1>
         <motion.p
-          className="text-slate-200 text-lg font-roboto max-w-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
+          className="text-white text-lg md:text-2xl mb-6 max-w-xl text-center drop-shadow"
+          style={{ fontFamily: 'Roboto, sans-serif' }}
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, type: 'spring', stiffness: 70 }}
         >
-          Welcome to ShieldRx — your trusted digital health companion. Connect, communicate, and manage your care in one secure place.
+          The future of your health records: Secure. Connected. Always accessible. Experience peace of mind with every click.
         </motion.p>
-        <div className="flex gap-4 justify-center">
-          <Button id="get-started-cta" asChild size="lg" className="bg-blue-700 text-white hover:bg-blue-800 font-semibold px-8 py-2 rounded-lg shadow-lg">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.6, type: 'spring', stiffness: 80 }}
+        >
+          <Button id="cta-hero-start" className="text-lg px-8 py-4 shadow-lg" asChild>
             <Link to="/signup">Get Started</Link>
           </Button>
-          <Button id="learn-more-cta" asChild variant="outline" className="border-white text-white hover:bg-blue-100/20">
-            <Link to="/dashboard">Learn More</Link>
-          </Button>
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </div>
   );
-}
+};
