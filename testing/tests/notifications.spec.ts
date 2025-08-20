@@ -1,4 +1,3 @@
-// Playwright test for Notifications page
 import { test, expect } from '@playwright/test';
 
 test.describe('Notifications Page', () => {
@@ -6,8 +5,8 @@ test.describe('Notifications Page', () => {
     await page.goto('/notifications');
   });
 
-  test('should display all notification types', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible();
+  test('shows notifications list and details', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /Notifications/ })).toBeVisible();
     await expect(page.getByText('Upcoming appointment with Dr. Nguyen on Jul 17, 2024')).toBeVisible();
     await expect(page.getByText('New lab result available: CBC Panel')).toBeVisible();
     await expect(page.getByText('New secure message from Dr. Patel')).toBeVisible();
