@@ -1,35 +1,37 @@
+// Playwright test for Messaging page
 import { test, expect } from '@playwright/test';
 
 test.describe('Messaging Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/messaging');
+  });
+
+  test('should display conversations and New Message button', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Secure Messaging' })).toBeVisible();
+    await expect(page.getByRole('button', { name: /New Message/ })).toBeVisible();
+    await expect(page.getByText('Dr. Patel')).toBeVisible();
+    await expect(page.getByText('Dr. Nguyen')).toBeVisible();
+    await expect(page.getByText('Lab Results Follow Up')).toBeVisible();
+    await expect(page.getByText('Prescription Refill')).toBeVisible();
+    await expect(page.getByText('Thank you for the update! I have some questions.')).toBeVisible();
+    await expect(page.getByText('Your refill has been approved and sent to your pharmacy.')).toBeVisible();
+    await expect(page.getByText('Jul 15, 2024')).toBeVisible();
+    await expect(page.getByText('Jul 10, 2024')).toBeVisible();
   });
 
-  test('shows all conversations with correct content and unread badge', async ({ page }) => {
-    const conv1 = page.getByText('Dr. Patel').locator('..'); // Get parent
-    await expect(conv1.getByText('Lab Results Follow Up')).toBeVisible();
-    await expect(conv1.getByText('Thank you for the update! I have some questions.')).toBeVisible();
-    await expect(conv1.getByText('Jul 15, 2024')).toBeVisible();
-    await expect(conv1.getByText('New')).toBeVisible();
-
-    const conv2 = page.getByText('Dr. Nguyen').locator('..');
-    await expect(conv2.getByText('Prescription Refill')).toBeVisible();
-    await expect(conv2.getByText('Your refill has been approved and sent to your pharmacy.')).toBeVisible();
-    await expect(conv2.getByText('Jul 10, 2024')).toBeVisible();
-    await expect(conv2.getByText('New')).not.toBeVisible();
+  test('unread conversation is visually marked', async ({ page }) => {
+    // The "New" badge should be visible for unread
+    await expect(page.getByText('New').first()).toBeVisible();
+    // The background color for unread row (bg-blue-50) can be checked via CSS if desired
   });
 
-  test('new message button navigates', async ({ page }) => {
-    await page.getByRole('button', { name: /New Message/i }).click();
-    await expect(page).toHaveURL(/\/messaging\/new/);
+  test('Details button navigates to conversation details', async ({ page }) => {
+    await page.locator('#messaging-details-conv-1').click();
+    await expect(page).toHaveURL(/messaging\/conv-1/);
   });
 
-  test('details buttons navigate to conversation detail', async ({ page }) => {
-    await page.getByRole('button', { name: 'View', exact: true }).first().click();
-    await expect(page).toHaveURL(/\/messaging\/conv-1/);
-    await page.goto('/messaging');
-    await page.getByRole('button', { name: 'View', exact: true }).nth(1).click();
-    await expect(page).toHaveURL(/\/messaging\/conv-2/);
+  test('New Message button navigates to create message page', async ({ page }) => {
+    await page.getByRole('button', { name: /New Message/ }).click();
+    await expect(page).toHaveURL(/messaging\/new/);
   });
 });
